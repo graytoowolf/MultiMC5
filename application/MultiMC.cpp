@@ -516,6 +516,8 @@ MultiMC::MultiMC(int &argc, char **argv) : QApplication(argc, argv)
         m_settings->registerSetting("SKINSURL","");
         m_settings->registerSetting("authv","");
         m_settings->registerSetting("Rzlb","");
+        m_settings->registerSetting("upsource","");
+        m_settings->registerSetting("resource","");
 
         // Native library workarounds
         m_settings->registerSetting("UseNativeOpenAL", false);
@@ -706,6 +708,18 @@ MultiMC::MultiMC(int &argc, char **argv) : QApplication(argc, argv)
         {
            settings()->set("Rzlb","1");
         }
+        QString currentsource =settings()->get("upsource").toString();
+        if(currentsource == "")
+        {
+            settings()->set("upsource","0");
+        }
+        //resource
+        QString resourcebase =settings()->get("resource").toString();
+        if(resourcebase == "")
+        {
+            settings()->set("resource","http://resources.download.minecraft.net/");
+        }
+
         QString currentJvmArgs = settings()->get("JvmArgs").toString();
         if (currentJvmArgs == "")
         {

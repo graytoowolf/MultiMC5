@@ -22,6 +22,7 @@
 #include <QJsonObject>
 #include <QVariant>
 #include <QDebug>
+#include <QSettings>
 
 #include "AssetsUtils.h"
 #include "FileSystem.h"
@@ -308,7 +309,11 @@ QString AssetObject::getLocalPath()
 
 QUrl AssetObject::getUrl()
 {
-    return BuildConfig.RESOURCE_BASE + getRelPath();
+    QString iniFilePath = "multimc.cfg";
+    QSettings settings(iniFilePath,QSettings::IniFormat);
+    QString RESOURCEBASE = settings.value("resource").toString();
+
+    return RESOURCEBASE + getRelPath();
 }
 
 QString AssetObject::getRelPath()

@@ -65,7 +65,7 @@ public:
      */
     QString META_URL;
 
-    QString RESOURCE_BASE = "https://resources.download.minecraft.net/";
+    QString RESOURCE_BASE = "https://download.mcbbs.net/assets/";
     QString LIBRARY_BASE = "https://libraries.minecraft.net/";
     QString SKINS_BASE = "https://crafatar.com/skins/";
     QString AUTH_BASE = "https://authserver.mojang.com/";

@@ -13,6 +13,7 @@
 #include "minecraft/OpSys.h"
 #include "GradleSpecifier.h"
 #include "MojangDownloadInfo.h"
+#include "settings/SettingsObject.h"
 
 #include "multimc_logic_export.h"
 

@@ -6,7 +6,7 @@
 #include <Env.h>
 #include <FileSystem.h>
 #include <BuildConfig.h>
-
+#include <QSettings>
 
 void Library::getApplicableFiles(OpSys system, QStringList& jar, QStringList& native, QStringList& native32,
                                  QStringList& native64, const QString &overridePath) const
@@ -72,6 +72,21 @@ QList< std::shared_ptr< NetAction > > Library::getDownloads(
 
     auto add_download = [&](QString storage, QString url, QString sha1)
     {
+        QString iniFilePath = "multimc.cfg";
+        QSettings settings(iniFilePath,QSettings::IniFormat);
+        int Upsourcepz = settings.value("upsource").toInt();
+        if(Upsourcepz == 1)
+        {
+            url.replace("libraries.minecraft.net","download.mcbbs.net/maven");
+            url.replace("files.minecraftforge.net","download.mcbbs.net");
+        }
+        else if (Upsourcepz == 2)
+        {
+            url.replace("libraries.minecraft.net","bmclapi2.bangbang93.com/maven");
+            url.replace("files.minecraftforge.net","bmclapi2.bangbang93.com");
+        }
+        //qDebug()<< "修改后url:"<<url<<"----"<<Upsourcepz;
+
         if(local)
         {
             return check_local_file(storage);

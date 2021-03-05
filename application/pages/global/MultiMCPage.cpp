@@ -300,7 +300,33 @@ void MultiMCPage::applySettings()
         s->set("Serverid",ui->TydllDirTextBox->text());
         s->set("SKINSURL",ui->SkinsurlDirTextBox->text());
     }
+    //下载源
+    int resourceid=ui->SourceBox->currentIndex();
+    s->set("upsource",resourceid);
+    switch(resourceid)
+    {
+    case 0:
+        s->set("resource", "http://resources.download.minecraft.net/");
+        break;
+    case 1:
+        s->set("resource", "https://download.mcbbs.net/assets/");
+        break;
+    case 2:
+        s->set("resource", "https://bmclapi2.bangbang93.com/assets/");
+        break;
 
+    }
+
+    /*if(resourceid==0)
+    {
+        s->set("resource","https://download.mcbbs.net/assets/");
+    }
+    else if (resourceid==1) {
+
+    }
+    else if (resourceid==2) {
+
+    }*/
 
     // Folders
     // TODO: Offer to move instances to new instance folder.
@@ -386,6 +412,9 @@ void MultiMCPage::loadSettings()
         }
     }
     //加载认证
+    int Dsource=s->get("upsource").toInt();
+    ui->SourceBox->setCurrentIndex(Dsource);
+
     int Rzlbs=s->get("Rzlb").toInt();
     ui->RzboBox->setCurrentIndex(Rzlbs);
     if(Rzlbs == 0){
