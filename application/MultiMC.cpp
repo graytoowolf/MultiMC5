@@ -720,16 +720,6 @@ MultiMC::MultiMC(int &argc, char **argv) : QApplication(argc, argv)
             settings()->set("resource","http://resources.download.minecraft.net/");
         }
 
-        QString currentJvmArgs = settings()->get("JvmArgs").toString();
-        if (currentJvmArgs == "")
-        {
-            if(settings()->get("Rzlb").toInt()!=0){
-                settings()->set("JvmArgs","-javaagent:../../../jars/authlib-injector.jar=https://www.mcpifu.top/api/yggdrasil");
-            }
-
-        }
-
-
     }
     {
         dljob.reset(new NetJob("authlib-injector"));

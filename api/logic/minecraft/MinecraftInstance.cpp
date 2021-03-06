@@ -39,6 +39,8 @@
 #include "MinecraftLoadAndCheck.h"
 #include <minecraft/gameoptions/GameOptions.h>
 
+#include <QDebug>
+
 #define IBUS "@im=ibus"
 
 // all of this because keeping things compatible with deprecated old settings
@@ -93,6 +95,8 @@ MinecraftInstance::MinecraftInstance(SettingsObjectPtr globalSettings, SettingsO
     // Memory
     auto memorySetting = m_settings->registerSetting("OverrideMemory", false);
     m_settings->registerOverride(globalSettings->getSetting("MinMemAlloc"), memorySetting);
+    m_settings->registerOverride(globalSettings->getSetting("Rzlb"), memorySetting);
+    m_settings->registerOverride(globalSettings->getSetting("AUTHURL"), memorySetting);
     m_settings->registerOverride(globalSettings->getSetting("MaxMemAlloc"), memorySetting);
     m_settings->registerOverride(globalSettings->getSetting("PermGen"), memorySetting);
 
@@ -303,13 +307,17 @@ QStringList MinecraftInstance::javaArguments() const
         args << QString("-XstartOnFirstThread");
     }
 #endif
-
+    int Rzlbid = settings()->get("Rzlb").toInt();
+    //qDebug()<<"调试Rzlbid:"<<Rzlbid;
+    if(Rzlbid != 0 )
+    {
+       args << QString("-javaagent:../../../jars/authlib-injector.jar="+settings()->get("AUTHURL").toString());
+    }
     // HACK: Stupid hack for Intel drivers. See: https://mojang.atlassian.net/browse/MCL-767
 #ifdef Q_OS_WIN32
     args << QString("-XX:HeapDumpPath=MojangTricksIntelDriversForPerformance_javaw.exe_"
                     "minecraft.exe.heapdump");
 #endif
-
     int min = settings()->get("MinMemAlloc").toInt();
     int max = settings()->get("MaxMemAlloc").toInt();
     if(min < max)
@@ -335,6 +343,8 @@ QStringList MinecraftInstance::javaArguments() const
     }
 
     args << "-Duser.language=en";
+    //qDebug()<<"调试args:"<<args;
+
 
     return args;
 }

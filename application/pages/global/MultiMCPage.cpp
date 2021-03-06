@@ -523,6 +523,8 @@ void MultiMCPage::on_RzboBox_activated(int index)
         ui->Authur->setHidden(false);
         ui->Skinsur->setHidden(false);
         ui->Tydl->setHidden(true);
+        ui->AuthurlDirTextBox->setText("https://www.mcpifu.top/api/yggdrasil/");
+        ui->SkinsurlDirTextBox->setText("https://www.mcpifu.top/skins/");
     }else if(index == 2){
         ui->Authur->setHidden(true);
         ui->Skinsur->setHidden(false);
